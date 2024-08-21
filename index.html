@@ -31,7 +31,7 @@
         <thead>
             <tr>
                 <th>Rank</th>
-                <th>Player</th>
+                <th>Name</th>
                 <th>Score</th>
             </tr>
         </thead>
@@ -42,7 +42,7 @@
 
     <script>
         // URL to the published Google Sheet in CSV format
-        const sheetURL = 'https://docs.google.com/spreadsheets/d/1EYCwd1ykrRrKenFDozghpSi9pxgK9_6TCfK4UV3wjj0/pub?output=csv';
+        const sheetURL = 'YOUR_CSV_URL_HERE';
 
         async function fetchLeaderboardData() {
             try {
@@ -55,16 +55,18 @@
 
                 rows.forEach((row, index) => {
                     const cells = row.split(',');
+                    if (cells.length < 3) return; // Skip rows with insufficient data
+
                     const newRow = tbody.insertRow();
                     
-                    // Insert rank, player, and score cells
+                    // Insert rank, name, and score cells
                     const rankCell = newRow.insertCell();
-                    const playerCell = newRow.insertCell();
+                    const nameCell = newRow.insertCell();
                     const scoreCell = newRow.insertCell();
 
-                    rankCell.innerText = index + 1;
-                    playerCell.innerText = cells[0]; // Assuming first column is player name
-                    scoreCell.innerText = cells[1]; // Assuming second column is score
+                    rankCell.innerText = cells[0]; // Assuming first column is the rank
+                    nameCell.innerText = cells[1]; // Assuming second column is the name
+                    scoreCell.innerText = cells[2]; // Assuming third column is the score
                 });
             } catch (error) {
                 console.error('Error fetching leaderboard data:', error);
